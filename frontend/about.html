@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda - TechMart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #2563eb;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: #1f2937;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: #374151;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f1f5f9;
+            border-radius: 12px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3b82f6;
+            display: block;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shopping-cart"></i> TechMart
+            </a>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <h1>Hakkımızda</h1>
+            
+            <div class="highlight">
+                <h2 style="color: white; border: none; margin-top: 0;">TechMart - Teknolojinin Kalbi</h2>
+                <p style="color: white; margin-bottom: 0;">2015'ten beri Türkiye'nin en güvenilir teknoloji partneri olarak, son teknoloji ürünlerini en uygun fiyatlarla sunuyoruz.</p>
+            </div>
+
+            <h2>Misyonumuz</h2>
+            <p>
+                TechMart olarak, teknolojinin hayatımızı kolaylaştıran gücüne inanıyoruz. Amacımız, en son teknoloji ürünlerini herkesin erişebileceği fiyatlarla sunarak, Türkiye'deki her evin teknoloji ile buluşmasını sağlamaktır.
+            </p>
+
+            <h2>Vizyonumuz</h2>
+            <p>
+                Türkiye'nin en büyük ve en güvenilir online teknoloji platformu olmak. Müşterilerimize sadece ürün değil, aynı zamanda kusursuz bir alışveriş deneyimi sunarak sektörde öncü konumumuzu korumak.
+            </p>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Yıllık Deneyim</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">1M+</span>
+                    <span class="stat-label">Mutlu Müşteri</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Ürün Çeşidi</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">7/24</span>
+                    <span class="stat-label">Müşteri Desteği</span>
+                </div>
+            </div>
+
+            <h2>Değerlerimiz</h2>
+            <p>
+                <strong>Güvenilirlik:</strong> Müşterilerimizin güvenini kazanmak ve korumak en büyük önceliğimizdir. Her işlemde şeffaflık ve dürüstlük ilkelerimizden taviz vermeyiz.
+            </p>
+            <p>
+                <strong>Kalite:</strong> Sadece orijinal ve kaliteli ürünler sunuyoruz. Titizlikle seçtiğimiz markalar ve ürünlerle müşterilerimizin memnuniyetini garanti ediyoruz.
+            </p>
+            <p>
+                <strong>İnovasyon:</strong> Teknolojinin hızla değişen dünyasında, sürekli kendimizi yeniliyor ve müşterilerimize en son trendleri sunuyoruz.
+            </p>
+
+            <h2>Neden TechMart?</h2>
+            <p>
+                ✅ <strong>Geniş Ürün Yelpazesi:</strong> iPhone'dan MacBook'a, Samsung'dan gaming bilgisayarlara kadar her kategoride binlerce ürün.<br>
+                ✅ <strong>Rekabetçi Fiyatlar:</strong> Piyasanın en uygun fiyatları ve özel indirim kampanyaları.<br>
+                ✅ <strong>Hızlı Teslimat:</strong> Aynı gün kargo, 1-2 iş günü teslimat garantisi.<br>
+                ✅ <strong>Güvenli Ödeme:</strong> 256-bit SSL şifrelemesi ile korumalı ödeme sistemi.<br>
+                ✅ <strong>Müşteri Memnuniyeti:</strong> 7/24 canlı destek ve kolay iade politikası.
+            </p>
+        </div>
+    </main>
+</body>
+</html>

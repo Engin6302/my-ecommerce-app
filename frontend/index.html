@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 TechMart - Türkiye'nin En Büyük Teknoloji Mağazası</title>
+    <meta name="description" content="iPhone, Samsung, MacBook, laptop ve binlerce teknoloji ürünü en uygun fiyatlarla TechMart'ta! Ücretsiz kargo, hızlı teslimat.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --border-radius: 12px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background-color: var(--light-color);
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .container-fluid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .top-bar {
+            background: var(--gray-900);
+            color: #fff;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-bar-links a {
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .top-bar-links a:hover {
+            opacity: 1;
+        }
+
+        .main-header {
+            padding: 15px 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-form {
+            display: flex;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .search-form:focus-within {
+            border-color: var(--primary-color);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-btn {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Search Dropdown */
+        .search-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-dropdown.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s ease;
+        }
+
+        .search-result-item:hover {
+            background: #f9fafb;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-image {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #f3f4f6;
+        }
+
+        .search-result-info {
+            flex: 1;
+        }
+
+        .search-result-name {
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 2px;
+            font-size: 14px;
+        }
+
+        .search-result-price {
+            color: #3b82f6;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .header-btn:hover {
+            background: var(--gray-100);
+            color: var(--primary-color);
+        }
+
+        .header-btn i {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger-color);
+            color: #fff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            display: none;
+            z-index: 1001;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 12px 16px;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-100);
+            transition: background-color 0.3s;
+        }
+
+        .user-dropdown a:hover {
+            background: var(--gray-50);
+        }
+
+        .user-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        /* ==================== NAVIGATION ==================== */
+        .navigation {
+            background: #fff;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-categories {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .category-menu-btn {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .category-menu-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Categories Dropdown */
+        .categories-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1000;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .nav-categories:hover .categories-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .categories-dropdown-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid #f3f4f6;
+            color: #374151;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s ease;
+        }
+
+        .categories-dropdown-item:hover {
+            background: #f9fafb;
+            color: #3b82f6;
+        }
+
+        .categories-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .categories-dropdown-icon {
+            width: 20px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 15px 20px;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            background: var(--gray-50);
+        }
+
+        .nav-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .nav-info i {
+            color: var(--success-color);
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background: var(--gray-100);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .btn-outline:hover {
+            background: #fff;
+            color: var(--primary-color);
+        }
+
+        /* ==================== CATEGORIES SECTION ==================== */
+
+        /* Category Dropdown */
+        .category-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .category-card:hover .category-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .category-dropdown-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            color: #374151;
+            text-decoration: none;
+            display: block;
+            transition: background 0.2s ease;
+            font-size: 14px;
+        }
+
+        .category-dropdown-item:hover {
+            background: #f9fafb;
+            color: #3b82f6;
+        }
+
+        .category-dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .categories-section {
+            padding: 80px 0;
+            background: #fff;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .category-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--gray-900);
+        }
+
+        .category-card p {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 15px;
+        }
+
+        .category-product-count {
+            font-size: 12px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* ==================== FEATURED PRODUCTS ==================== */
+        .featured-section {
+            padding: 80px 0;
+            background: var(--gray-50);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            background: #f8fafc;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger-color);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--gray-900);
+            line-height: 1.3;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            color: var(--warning-color);
+            font-size: 12px;
+        }
+
+        .rating-text {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .current-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--success-color);
+        }
+
+        .original-price {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-cart {
+            flex: 1;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-cart:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-favorite {
+            background: none;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-500);
+            padding: 10px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-favorite:hover,
+        .btn-favorite.active {
+            background: var(--danger-color);
+            color: #fff;
+            border-color: var(--danger-color);
+        }
+
+        /* ==================== FEATURES SECTION ==================== */
+        .features-section {
+            padding: 80px 0;
+            background: #fff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            color: #fff;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--gray-900);
+        }
+
+        .feature-card p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            background: var(--gray-900);
+            color: #fff;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-700);
+            padding-top: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ==================== LOADING STATES ==================== */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gray-200);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-container {
+                order: 3;
+                max-width: 100%;
+            }
+
+            .header-actions {
+                order: 2;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-info {
+                display: none;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container,
+            .container-fluid {
+                padding: 0 15px;
+            }
+
+            .top-bar {
+                display: none;
+            }
+
+            .hero {
+                padding: 40px 0;
+            }
+
+            .categories-section,
+            .featured-section,
+            .features-section {
+                padding: 40px 0;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+        }
+
+        /* ==================== UTILITY CLASSES ==================== */
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .d-none { display: none; }
+        .d-block { display: block; }
+        .d-flex { display: flex; }
+        .align-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .gap-10 { gap: 10px; }
+        .gap-15 { gap: 15px; }
+        .gap-20 { gap: 20px; }
+        .mb-10 { margin-bottom: 10px; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-30 { margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="top-bar-links">
+                    <span><i class="fas fa-phone"></i> 0850 123 45 67</span>
+                    <span><i class="fas fa-envelope"></i> info@techmart.com</span>
+                </div>
+                <div class="top-bar-links">
+                    <a href="/admin.html">Satıcı Merkezi</a>
+                    <a href="#">Yardım</a>
+                    <a href="#">Mobil Uygulama</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="main-header">
+            <div class="container">
+                <div class="header-content">
+                    <a href="/" class="logo">
+                        <i class="fas fa-shopping-cart"></i>
+                        TechMart
+                    </a>
+
+                    <div class="search-container">
+                        <form class="search-form" onsubmit="searchProducts(event)">
+                            <input type="text" class="search-input" id="searchInput" 
+                                   placeholder="Ürün, kategori veya marka ara..." autocomplete="off"
+                                   oninput="handleSearchInput(this.value)" onblur="hideSearchDropdown()">
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                        <div class="search-dropdown" id="searchDropdown"></div>
+                    </div>
+
+                    <div class="header-actions">
+                        <div class="user-menu">
+                            <button class="header-btn" id="userMenuBtn" onclick="toggleUserMenu()">
+                                <i class="fas fa-user"></i>
+                                <span id="userMenuText">Giriş Yap</span>
+                            </button>
+                            <div class="user-dropdown" id="userDropdown">
+                                <div id="loggedOutMenu">
+                                    <a href="#" onclick="openLoginModal()">Giriş Yap</a>
+                                    <a href="#" onclick="openRegisterModal()">Üye Ol</a>
+                                </div>
+                                <div id="loggedInMenu" style="display: none;">
+                                    <a href="#" onclick="openProfile()">Profilim</a>
+                                    <a href="#" onclick="openOrders()">Siparişlerim</a>
+                                    <a href="#" onclick="openFavorites()">Favorilerim</a>
+                                    <a href="#" onclick="logout()">Çıkış Yap</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="#" class="header-btn" onclick="openFavorites()">
+                            <i class="fas fa-heart"></i>
+                            <span>Favoriler</span>
+                        </a>
+
+                        <button class="header-btn" onclick="openCart()" style="position: relative;">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Sepet</span>
+                            <div class="cart-badge" id="cartBadge">0</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="nav-categories">
+                        <button class="category-menu-btn">
+                            <i class="fas fa-bars"></i>
+                            Tüm Kategoriler
+                        </button>
+                        <div class="categories-dropdown" id="categoriesDropdown">
+                            <!-- Kategoriler JavaScript ile doldurulacak -->
+                        </div>
+                    </div>
+
+                    <ul class="nav-links">
+                        <li><a href="#" onclick="loadFeaturedProducts()">Öne Çıkanlar</a></li>
+                        <li><a href="#" onclick="loadDiscountedProducts()">Fırsatlar</a></li>
+                        <li><a href="#" onclick="filterByCategory('elektronik')">Elektronik</a></li>
+                        <li><a href="#" onclick="filterByCategory('bilgisayar')">Bilgisayar</a></li>
+                        <li><a href="#" onclick="filterByCategory('telefon')">Telefon</a></li>
+                    </ul>
+
+                    <div class="nav-info">
+                        <span><i class="fas fa-truck"></i> Ücretsiz Kargo</span>
+                        <span><i class="fas fa-redo"></i> Kolay İade</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Teknolojinin En İyisini Keşfedin!</h1>
+                <p>En son teknoloji ürünleri, en uygun fiyatlar ve güvenilir hizmet TechMart'ta! iPhone, Samsung, MacBook ve binlerce ürün sizi bekliyor.</p>
+                <div class="hero-buttons">
+                    <a href="#featured" class="btn btn-primary">
+                        <i class="fas fa-star"></i>
+                        Öne Çıkanları Keşfet
+                    </a>
+                    <a href="#categories" class="btn btn-outline">
+                        <i class="fas fa-th-large"></i>
+                        Kategorileri Gör
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Kategorileri Keşfedin</h2>
+                <p>İhtiyacınız olan her teknoloji ürününü kategoriler halinde düzenledik</p>
+            </div>
+            <div class="categories-grid" id="categoriesGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-section" id="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2>Öne Çıkan Ürünler</h2>
+                <p>En popüler ve en çok tercih edilen teknoloji ürünleri</p>
+            </div>
+            <div class="products-grid" id="featuredProductsGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Neden TechMart?</h2>
+                <p>Müşteri memnuniyeti odaklı hizmet anlayışımızla fark yaratıyoruz</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Hızlı Kargo</h3>
+                    <p>Siparişleriniz aynı gün kargoya teslim, 1-2 iş günü içinde kapınızda!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Güvenli Alışveriş</h3>
+                    <p>256-bit SSL sertifikası ile korumalı ödeme sistemi ve güvenli alışveriş deneyimi.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>7/24 Destek</h3>
+                    <p>Uzman müşteri hizmetleri ekibimiz her zaman yanınızda, 7 gün 24 saat!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h3>Kolay İade</h3>
+                    <p>14 gün içinde koşulsuz iade hakkı, iade işlemleriniz 24 saat içinde sonuçlanır.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TechMart</h3>
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
+                        Türkiye'nin en büyük teknoloji mağazası. 2015'ten beri güvenilir hizmet.
+                    </p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" style="font-size: 20px;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="font-size: 20px;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="font-size: 20px;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="font-size: 20px;"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Kurumsal</h3>
+                    <a href="about.html">Hakkımızda</a>
+                    <a href="#" onclick="showComingSoon()">Kariyer</a>
+                    <a href="#" onclick="showComingSoon()">Basın</a>
+                    <a href="#" onclick="showComingSoon()">Yatırımcı İlişkileri</a>
+                    <a href="#" onclick="showComingSoon()">Sürdürülebilirlik</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Yardım</h3>
+                    <a href="faq.html">SSS</a>
+                    <a href="support.html">Canlı Destek</a>
+                    <a href="#" onclick="showComingSoon()">İade ve Değişim</a>
+                    <a href="#" onclick="showComingSoon()">Kargo Takibi</a>
+                    <a href="#" onclick="showComingSoon()">Garanti Şartları</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Güvenli Alışveriş</h3>
+                    <a href="#">Gizlilik Politikası</a>
+                    <a href="#">Kullanım Şartları</a>
+                    <a href="#">Çerez Politikası</a>
+                    <a href="#">KVKK</a>
+                    <a href="#">Güvenlik</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TechMart. Tüm hakları saklıdır. | Designed with ❤️ for technology lovers</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global değişkenler
+        let currentUser = null;
+        let authToken = localStorage.getItem('token');
+        let cart = [];
+        let categories = [];
+        let featuredProducts = [];
+
+        // Sayfa yüklendiğinde çalışacak
+        document.addEventListener('DOMContentLoaded', async function() {
+            await checkAuth();
+            await loadCategories();
+            await loadFeaturedProducts();
+            await loadCart();
+        });
+
+        // Kullanıcı doğrulama kontrolü
+        async function checkAuth() {
+            // Token'ı her seferinde localStorage'dan al
+            authToken = localStorage.getItem('token');
+            
+            if (authToken) {
+                try {
+                    // Önce localStorage'dan kullanıcı bilgisini almaya çalış
+                    const storedUser = localStorage.getItem('user');
+                    if (storedUser) {
+                        try {
+                            currentUser = JSON.parse(storedUser);
+                            updateUserInterface();
+                            return; // Kullanıcı bilgisi localStorage'da varsa API çağrısı yapmaya gerek yok
+                        } catch (e) {
+                            console.log('Stored user data corrupted, fetching from API');
+                        }
+                    }
+
+                    // localStorage'da kullanıcı bilgisi yoksa API'den al
+                    const response = await fetch('http://localhost:8000/auth/profile', {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success && data.user) {
+                            currentUser = data.user;
+                            localStorage.setItem('user', JSON.stringify(data.user));
+                            updateUserInterface();
+                        } else {
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('user');
+                            authToken = null;
+                            currentUser = null;
+                        }
+                    } else {
+                        // Token geçersiz
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+                        authToken = null;
+                        currentUser = null;
+                    }
+                } catch (error) {
+                    console.error('Auth kontrol hatası:', error);
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    authToken = null;
+                    currentUser = null;
+                }
+            } else {
+                // Token yoksa kullanıcı bilgisini de temizle
+                currentUser = null;
+            }
+            
+            // Her durumda arayüzü güncelle
+            updateUserInterface();
+            
+            // Kullanıcı giriş yapmışsa favori ve sepet verilerini sync et
+            if (authToken && currentUser) {
+                await syncFavoritesWithServer();
+                await syncCartWithServer();
+                updateCartBadge();
+            }
+        }
+
+        // Kullanıcı arayüzünü güncelle
+        function updateUserInterface() {
+            const userMenuText = document.getElementById('userMenuText');
+            const loggedOutMenu = document.getElementById('loggedOutMenu');
+            const loggedInMenu = document.getElementById('loggedInMenu');
+
+            if (currentUser && authToken) {
+                const firstName = currentUser.first_name || currentUser.firstName || 'Kullanıcı';
+                userMenuText.textContent = firstName;
+                if (loggedOutMenu) loggedOutMenu.style.display = 'none';
+                if (loggedInMenu) loggedInMenu.style.display = 'block';
+            } else {
+                userMenuText.textContent = 'Giriş Yap';
+                if (loggedOutMenu) loggedOutMenu.style.display = 'block';
+                if (loggedInMenu) loggedInMenu.style.display = 'none';
+            }
+        }
+
+        // Kategorileri yükle
+        async function loadCategories() {
+            try {
+                const response = await fetch('http://localhost:8000/categories');
+                const data = await response.json();
+
+                if (data.success) {
+                    categories = data.categories;
+                    displayCategories();
+                }
+            } catch (error) {
+                console.error('Kategoriler yükleme hatası:', error);
+            }
+        }
+
+        // Kategorileri görüntüle
+        function displayCategories() {
+            const grid = document.getElementById('categoriesGrid');
+            
+            const categoryIcons = {
+                'elektronik': 'fas fa-mobile-alt',
+                'bilgisayar': 'fas fa-laptop',
+                'ses-goruntu': 'fas fa-headphones',
+                'giyilebilir-teknoloji': 'fas fa-clock',
+                'oyun-konsol': 'fas fa-gamepad',
+                'ev-yasam': 'fas fa-home'
+            };
+
+            grid.innerHTML = categories.map(category => `
+                <div class="category-card" style="position: relative;">
+                    <a href="products.html?category=${category.slug}" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="category-icon">
+                            <i class="${categoryIcons[category.slug] || 'fas fa-cube'}"></i>
+                        </div>
+                        <h3>${category.name}</h3>
+                        <p>${category.description || 'Kategori ürünlerini keşfedin'}</p>
+                        <div class="category-product-count">${category.product_count} ürün</div>
+                    </a>
+                    <div class="category-dropdown">
+                        <a href="products.html?category=${category.slug}" class="category-dropdown-item">Tümünü Gör</a>
+                        <a href="products.html?category=${category.slug}&sort=price_asc" class="category-dropdown-item">En Ucuz</a>
+                        <a href="products.html?category=${category.slug}&sort=price_desc" class="category-dropdown-item">En Pahalı</a>
+                        <a href="products.html?category=${category.slug}&sort=rating" class="category-dropdown-item">En Çok Beğenilen</a>
+                        <a href="products.html?category=${category.slug}&sort=newest" class="category-dropdown-item">En Yeni</a>
+                    </div>
+                </div>
+            `).join('');
+
+            // Navigation dropdown'ını da doldur
+            populateNavigationDropdown();
+        }
+
+        function populateNavigationDropdown() {
+            const dropdown = document.getElementById('categoriesDropdown');
+            
+            const categoryIcons = {
+                'elektronik': 'fas fa-mobile-alt',
+                'bilgisayar': 'fas fa-laptop',
+                'ses-goruntu': 'fas fa-headphones',
+                'giyilebilir-teknoloji': 'fas fa-clock',
+                'oyun-konsol': 'fas fa-gamepad',
+                'ev-yasam': 'fas fa-home'
+            };
+
+            if (dropdown && categories.length > 0) {
+                dropdown.innerHTML = categories.map(category => `
+                    <a href="products.html?category=${category.slug}" class="categories-dropdown-item">
+                        <div class="categories-dropdown-icon">
+                            <i class="${categoryIcons[category.slug] || 'fas fa-cube'}"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 500;">${category.name}</div>
+                            <div style="font-size: 12px; color: #6b7280;">${category.product_count} ürün</div>
+                        </div>
+                    </a>
+                `).join('');
+            }
+        }
+
+        // Öne çıkan ürünleri yükle
+        async function loadFeaturedProducts() {
+            try {
+                console.log('Featured products yükleniyor...');
+                const headers = {};
+                if (authToken) {
+                    headers['Authorization'] = `Bearer ${authToken}`;
+                }
+
+                const response = await fetch('http://localhost:8000/products?featured=true&limit=8', { headers });
+                const data = await response.json();
+                console.log('Featured products API response:', data);
+
+                if (data.success) {
+                    featuredProducts = data.products;
+                    console.log('Featured products set:', featuredProducts);
+                    displayFeaturedProducts();
+                } else {
+                    console.error('Featured products API hatası:', data);
+                }
+            } catch (error) {
+                console.error('Öne çıkan ürünler yükleme hatası:', error);
+            }
+        }
+
+        // Öne çıkan ürünleri görüntüle
+        function displayFeaturedProducts() {
+            console.log('displayFeaturedProducts çağrıldı');
+            const grid = document.getElementById('featuredProductsGrid');
+            console.log('Grid element:', grid);
+            console.log('Featured products:', featuredProducts);
+            
+            if (!grid) {
+                console.error('featuredProductsGrid elementi bulunamadı!');
+                return;
+            }
+            
+            // Kullanıcı favorilerini al (server sync edilmiş)
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userId = user.id || 'guest';
+            const favorites = JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
+            
+            grid.innerHTML = featuredProducts.map(product => {
+                const discountPercentage = product.discount_percentage || 0;
+                const currentPrice = product.discount_price || product.price;
+                const originalPrice = product.discount_price ? product.price : null;
+                const isFavorite = favorites.includes(product.id);
+
+                return `
+                    <div class="product-card" onclick="window.location.href='product.html?slug=${product.slug}'">
+                        ${discountPercentage > 0 ? `<div class="product-badge">%${discountPercentage} İndirim</div>` : ''}
+                        <img src="${product.image_url}" alt="${product.name}" class="product-image" 
+                             onerror="this.src='https://via.placeholder.com/400x400/f1f5f9/64748b?text=Ürün+Görseli'">
+                        <div class="product-category">${product.category_name || 'Genel'}</div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                ${generateStars(product.rating || 0)}
+                            </div>
+                            <span class="rating-text">(${product.review_count || 0} değerlendirme)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">₺${parseFloat(currentPrice).toLocaleString('tr-TR', {minimumFractionDigits: 2})}</span>
+                            ${originalPrice ? `<span class="original-price">₺${parseFloat(originalPrice).toLocaleString('tr-TR', {minimumFractionDigits: 2})}</span>` : ''}
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-cart" onclick="event.stopPropagation(); addToCart(${product.id})">
+                                <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                            </button>
+                            <button class="btn-favorite ${isFavorite ? 'active' : ''}" 
+                                    onclick="event.stopPropagation(); toggleFavorite(${product.id}, this)">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Yıldız rating oluştur
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt star"></i>';
+            }
+            
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Kategoriye göre filtrele
+        async function filterByCategory(categorySlug) {
+            // Burada kategoriye özel sayfa açılacak
+            window.location.href = `/products.html?category=${categorySlug}`;
+        }
+
+        // Ürün detayını aç
+        function openProductDetail(productSlug) {
+            window.location.href = `/product.html?slug=${productSlug}`;
+        }
+
+        // Sepete ekle
+        async function addToCart(productId) {
+            if (!authToken) {
+                alert('Sepete ürün eklemek için giriş yapmalısınız!');
+                openLoginModal();
+                return;
+            }
+
+            try {
+                // API call to add to cart
+                const response = await fetch(`http://localhost:8000/cart/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ quantity: 1 })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    showNotification('Ürün sepete eklendi! 🛒', 'success');
+                    updateCartBadge();
+                    
+                    // Sync localStorage
+                    const user = JSON.parse(localStorage.getItem('user') || '{}');
+                    const userId = user.id || 'guest';
+                    const cart = JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
+                    const product = featuredProducts.find(p => p.id === productId);
+                    
+                    if (product) {
+                        const existingItem = cart.find(item => item.id === productId);
+                        
+                        if (existingItem) {
+                            existingItem.quantity += 1;
+                        } else {
+                            cart.push({
+                                id: productId,
+                                name: product.name,
+                                price: product.discount_price || product.price,
+                                image: product.image_url,
+                                quantity: 1
+                            });
+                        }
+                        
+                        localStorage.setItem(`cart_${userId}`, JSON.stringify(cart));
+                    }
+                } else {
+                    const errorData = await response.json();
+                    showNotification(errorData.message || 'Sepete ekleme hatası', 'error');
+                }
+            } catch (error) {
+                console.error('Add to cart error:', error);
+                showNotification('Sepete ekleme hatası: ' + error.message, 'error');
+            }
+        }
+
+        // Favoriye ekle/çıkar
+        async function toggleFavorite(productId, button) {
+            if (!authToken) {
+                alert('Favoriler için giriş yapmalısınız!');
+                openLoginModal();
+                return;
+            }
+
+            try {
+                // API call to toggle favorite
+                const response = await fetch(`http://localhost:8000/favorites/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    if (data.action === 'added') {
+                        button.classList.add('active');
+                        showNotification('Favorilere eklendi ❤️', 'success');
+                    } else {
+                        button.classList.remove('active');
+                        showNotification('Favorilerden kaldırıldı', 'success');
+                    }
+                    
+                    // Sync ile localStorage'ı da güncelle (backward compatibility)
+                    await syncFavoritesWithServer();
+                } else {
+                    showNotification(data.message || 'Favori işlemi hatası', 'error');
+                }
+            } catch (error) {
+                console.error('Favorite toggle error:', error);
+                showNotification('Favori işlemi hatası: ' + error.message, 'error');
+            }
+        }
+
+        // Sepet badge'ini güncelle
+        function updateCartBadge() {
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const userId = user.id || 'guest';
+                const cart = JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                const badge = document.getElementById('cartBadge');
+                if (badge) {
+                    badge.textContent = totalItems;
+                }
+            } catch (error) {
+                console.error('Sepet badge güncelleme hatası:', error);
+            }
+        }
+
+        // Sepeti yükle
+        async function loadCart() {
+            if (authToken) {
+                await updateCartBadge();
+            }
+        }
+
+        // Kullanıcı menüsünü toggle et
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Sayfa herhangi bir yerine tıklandığında dropdown'ları kapat
+        document.addEventListener('click', function(event) {
+            const userMenu = document.querySelector('.user-menu');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(event.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+
+        // Bildirim göster
+        function showNotification(message, type = 'info') {
+            // Basit alert ile, daha sonra toast notification eklenebilir
+            alert(message);
+        }
+
+        // Placeholder fonksiyonlar (modal'lar ayrı dosyalarda olacak)
+        function openLoginModal() {
+            window.location.href = 'login.html';
+        }
+
+        function openRegisterModal() {
+            window.location.href = 'register.html';
+        }
+
+        function openCart() {
+            window.location.href = 'cart.html';
+        }
+
+        function openProfile() {
+            window.location.href = 'profile.html';
+        }
+
+        function openOrders() {
+            window.location.href = 'profile.html';
+        }
+
+        function openFavorites() {
+            window.location.href = 'favorites.html';
+        }
+
+        function logout() {
+            // Sadece oturum verilerini temizle, kullanıcı verilerini koru
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            
+            // Global değişkenleri sıfırla
+            authToken = null;
+            currentUser = null;
+            cart = [];
+            
+            // Arayüzü güncelle
+            updateUserInterface();
+            updateCartBadge();
+            
+            showNotification('Başarıyla çıkış yaptınız!', 'success');
+            
+            // Ana sayfaya yönlendir
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        }
+
+        // Arama fonksiyonu
+        function searchProducts(event) {
+            event.preventDefault();
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (searchTerm) {
+                window.location.href = `products.html?search=${encodeURIComponent(searchTerm)}`;
+            }
+        }
+
+        // Live Search
+        let searchTimeout;
+        let searchResults = [];
+
+        function handleSearchInput(value) {
+            clearTimeout(searchTimeout);
+            
+            if (value.length < 2) {
+                hideSearchDropdown();
+                return;
+            }
+
+            searchTimeout = setTimeout(() => {
+                performLiveSearch(value);
+            }, 300);
+        }
+
+        async function performLiveSearch(query) {
+            try {
+                // Ürün araması yap
+                const productResponse = await fetch(`http://localhost:8000/products?search=${encodeURIComponent(query)}&limit=6`);
+                const productData = await productResponse.json();
+                
+                // Kategori araması yap
+                const categoryResponse = await fetch(`http://localhost:8000/categories`);
+                const categoryData = await categoryResponse.json();
+                
+                let results = [];
+                
+                // Ürün sonuçları ekle
+                if (productData.success && productData.products) {
+                    results = productData.products.map(product => ({
+                        type: 'product',
+                        ...product
+                    }));
+                }
+                
+                // Kategori sonuçları ekle (kategori adı sorguya uyuyorsa)
+                if (categoryData.success && categoryData.categories) {
+                    const matchingCategories = categoryData.categories.filter(category => 
+                        category.name.toLowerCase().includes(query.toLowerCase())
+                    );
+                    
+                    const categoryResults = matchingCategories.map(category => ({
+                        type: 'category',
+                        id: category.id,
+                        name: category.name,
+                        slug: category.slug,
+                        product_count: category.product_count
+                    }));
+                    
+                    results = [...categoryResults, ...results].slice(0, 8);
+                }
+                
+                searchResults = results;
+                displaySearchResults();
+            } catch (error) {
+                console.error('Live search error:', error);
+            }
+        }
+
+        function displaySearchResults() {
+            const dropdown = document.getElementById('searchDropdown');
+            
+            if (searchResults.length === 0) {
+                dropdown.innerHTML = '<div class="search-result-item">Sonuç bulunamadı</div>';
+            } else {
+                dropdown.innerHTML = searchResults.map(item => {
+                    if (item.type === 'category') {
+                        // Kategori sonucu
+                        return `
+                            <div class="search-result-item" onclick="goToCategory('${item.slug}')">
+                                <div class="search-result-image" style="background: #3b82f6; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-folder" style="color: white; font-size: 16px;"></i>
+                                </div>
+                                <div class="search-result-info">
+                                    <div class="search-result-name">${item.name}</div>
+                                    <div class="search-result-price" style="color: #6b7280;">${item.product_count} ürün</div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Ürün sonucu
+                        return `
+                            <div class="search-result-item" onclick="goToProduct('${item.slug}')">
+                                <img src="${item.image_url || 'https://via.placeholder.com/40x40/f1f5f9/64748b?text=Ürün'}" 
+                                     alt="${item.name}" class="search-result-image">
+                                <div class="search-result-info">
+                                    <div class="search-result-name">${item.name}</div>
+                                    <div class="search-result-price">₺${parseFloat(item.price || 0).toLocaleString('tr-TR', {minimumFractionDigits: 2})}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }).join('');
+            }
+            
+            dropdown.classList.add('active');
+        }
+
+        function hideSearchDropdown() {
+            setTimeout(() => {
+                document.getElementById('searchDropdown').classList.remove('active');
+            }, 150);
+        }
+
+        function goToProduct(slug) {
+            window.location.href = `product.html?slug=${slug}`;
+        }
+
+        function goToCategory(slug) {
+            window.location.href = `products.html?category=${slug}`;
+        }
+
+        // Server ile favorileri senkronize et
+        async function syncFavoritesWithServer() {
+            if (!authToken) return;
+            
+            try {
+                const response = await fetch('http://localhost:8000/favorites', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    const user = JSON.parse(localStorage.getItem('user') || '{}');
+                    const userId = user.id || 'guest';
+                    const favoriteIds = data.favorites.map(fav => fav.id);
+                    localStorage.setItem(`favorites_${userId}`, JSON.stringify(favoriteIds));
+                }
+            } catch (error) {
+                console.error('Favorites sync error:', error);
+            }
+        }
+
+        // Server ile sepeti senkronize et
+        async function syncCartWithServer() {
+            if (!authToken) return;
+            
+            try {
+                const response = await fetch('http://localhost:8000/cart', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    const user = JSON.parse(localStorage.getItem('user') || '{}');
+                    const userId = user.id || 'guest';
+                    localStorage.setItem(`cart_${userId}`, JSON.stringify(data.cart || []));
+                }
+            } catch (error) {
+                console.error('Cart sync error:', error);
+            }
+        }
+
+        // Yakında açılacak sayfalar için
+        function showComingSoon() {
+            showNotification('Bu sayfa yakında açılacak! 🚀', 'info');
+        }
+    </script>
+</body>
+</html>

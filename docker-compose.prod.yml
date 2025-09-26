@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: app_db_prod
+    environment:
+      POSTGRES_DB: techmart_db
+      POSTGRES_USER: techmart_user
+      POSTGRES_PASSWORD: techmart_password_2024
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U techmart_user -d techmart_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Backend Service (ECR image)
+  app:
+    image: 986619734913.dkr.ecr.eu-north-1.amazonaws.com/my-app-backend:latest
+    container_name: backend_app_prod
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=techmart_db
+      - DB_USER=techmart_user
+      - DB_PASSWORD=techmart_password_2024
+      - JWT_SECRET=super-secret-jwt-key-2024-production
+      - PORT=8000
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend Service (ECR image)
+  web:
+    image: 986619734913.dkr.ecr.eu-north-1.amazonaws.com/my-app-frontend:latest
+    container_name: nginx_proxy_prod
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data_prod:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

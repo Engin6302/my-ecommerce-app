@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürünler - TechMart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #3b82f6;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #2563eb;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .header-btn:hover {
+            color: #3b82f6;
+            background: #f3f4f6;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+
+        .filter-label {
+            display: block;
+            padding: 0.5rem 0;
+            color: #4b5563;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .filter-label:hover {
+            color: #3b82f6;
+        }
+
+        .filter-checkbox {
+            margin-right: 0.5rem;
+        }
+
+        .price-range {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .price-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .clear-filters {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .clear-filters:hover {
+            background: #e5e7eb;
+        }
+
+        /* Products Area */
+        .products-area {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .products-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .products-count {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: #f3f4f6;
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .view-btn {
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: white;
+            color: #3b82f6;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: white;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            object-position: center;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-brand {
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+        }
+
+        .rating-text {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ef4444;
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            text-decoration: line-through;
+        }
+
+        .discount {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #2563eb;
+        }
+
+        .favorite-btn {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn:hover,
+        .favorite-btn.active {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .products-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .sort-controls {
+                justify-content: space-between;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .header-container {
+                padding: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .search-bar {
+                order: 3;
+                width: 100%;
+                margin: 1rem 0 0 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shopping-bag"></i> TechMart
+            </a>
+            
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Ürün, marka veya kategori ara..." id="searchInput">
+                <button class="search-btn" onclick="performSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleFavorites()" title="Favoriler">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button class="header-btn" onclick="toggleCart()" title="Sepet">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="header-btn" onclick="toggleUser()" title="Hesabım">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="filter-section">
+                <h3 class="filter-title">
+                    <i class="fas fa-filter"></i> Filtreler
+                </h3>
+                
+                <div class="filter-group">
+                    <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: #374151;">Kategoriler</h4>
+                    <div id="categoryFilters">
+                        <!-- Categories will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: #374151;">Fiyat Aralığı</h4>
+                    <div class="price-range">
+                        <input type="number" class="price-input" placeholder="Min" id="minPrice">
+                        <span>-</span>
+                        <input type="number" class="price-input" placeholder="Max" id="maxPrice">
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: #374151;">Değerlendirme</h4>
+                    <label class="filter-label">
+                        <input type="checkbox" class="filter-checkbox" value="5" name="rating">
+                        <span class="stars">★★★★★</span> 5 yıldız
+                    </label>
+                    <label class="filter-label">
+                        <input type="checkbox" class="filter-checkbox" value="4" name="rating">
+                        <span class="stars">★★★★☆</span> 4 yıldız ve üzeri
+                    </label>
+                    <label class="filter-label">
+                        <input type="checkbox" class="filter-checkbox" value="3" name="rating">
+                        <span class="stars">★★★☆☆</span> 3 yıldız ve üzeri
+                    </label>
+                </div>
+
+                <button class="clear-filters" onclick="clearAllFilters()">
+                    Filtreleri Temizle
+                </button>
+            </div>
+        </div>
+
+        <!-- Products Area -->
+        <div class="products-area">
+            <div class="products-header">
+                <div>
+                    <nav class="breadcrumb">
+                        <a href="new-index.html">Ana Sayfa</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span id="currentCategory">Tüm Ürünler</span>
+                    </nav>
+                    <div class="products-count" id="productsCount">Ürünler yükleniyor...</div>
+                </div>
+                
+                <div class="sort-controls">
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                    
+                    <select class="sort-select" id="sortSelect">
+                        <option value="featured">Öne Çıkanlar</option>
+                        <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                        <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+                        <option value="rating">En Yüksek Puan</option>
+                        <option value="newest">En Yeniler</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Ürünler yükleniyor...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:8000';
+
+        // State
+        let allProducts = [];
+        let filteredProducts = [];
+        let categories = [];
+        let currentFilters = {
+            category: null,
+            minPrice: null,
+            maxPrice: null,
+            rating: [],
+            search: ''
+        };
+        let currentSort = 'featured';
+
+        // DOM Elements
+        const productsGrid = document.getElementById('productsGrid');
+        const productsCount = document.getElementById('productsCount');
+        const currentCategory = document.getElementById('currentCategory');
+        const categoryFilters = document.getElementById('categoryFilters');
+        const sortSelect = document.getElementById('sortSelect');
+        const searchInput = document.getElementById('searchInput');
+        const minPriceInput = document.getElementById('minPrice');
+        const maxPriceInput = document.getElementById('maxPrice');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadCategories();
+            await loadProducts();
+            setupEventListeners();
+            updateCartBadge();
+            
+            // Check URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            const search = urlParams.get('search');
+            
+            if (category) {
+                currentFilters.category = category;
+                currentCategory.textContent = getCategoryName(category);
+            }
+            
+            if (search) {
+                currentFilters.search = search;
+                searchInput.value = search;
+            }
+            
+            applyFilters();
+        });
+
+        // Load categories from API
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_BASE}/categories`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.categories) {
+                        categories = data.categories;
+                        renderCategoryFilters();
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        // Load products from API
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_BASE}/products`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.products) {
+                        allProducts = data.products;
+                        filteredProducts = [...allProducts];
+                        renderProducts();
+                    } else {
+                        showError('Ürün verisi bulunamadı');
+                    }
+                } else {
+                    showError('Ürünler yüklenirken bir hata oluştu.');
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showError('Bağlantı hatası. Lütfen sayfayı yenileyin.');
+            }
+        }
+
+        // Render category filters
+        function renderCategoryFilters() {
+            categoryFilters.innerHTML = categories.map(category => `
+                <label class="filter-label">
+                    <input type="checkbox" class="filter-checkbox" value="${category.slug}" name="category">
+                    ${category.name}
+                </label>
+            `).join('');
+        }
+
+        // Render products
+        function renderProducts() {
+            if (filteredProducts.length === 0) {
+                productsGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3>Ürün bulunamadı</h3>
+                        <p>Arama kriterlerinizi değiştirmeyi deneyin.</p>
+                    </div>
+                `;
+                productsCount.textContent = 'Ürün bulunamadı';
+                return;
+            }
+
+            productsGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" onclick="goToProduct('${product.slug}')">
+                    <div class="product-image">
+                        ${product.image_url ? 
+                            `<img src="${product.image_url}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x400/f1f5f9/64748b?text=Ürün+Görseli'">` :
+                            `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #9ca3af;"><i class="fas fa-box" style="font-size: 3rem;"></i></div>`
+                        }
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">${product.brand || 'TechMart'}</div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-rating">
+                            <div class="stars">${renderStars(product.average_rating || 0)}</div>
+                            <span class="rating-text">(${product.review_count || 0})</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">₺${formatPrice(product.price)}</span>
+                            ${product.original_price && product.original_price > product.price ? 
+                                `<span class="original-price">₺${formatPrice(product.original_price)}</span>
+                                 <span class="discount">%${Math.round((1 - product.price / product.original_price) * 100)} İNDİRİM</span>` : 
+                                ''
+                            }
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">
+                                <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                            </button>
+                            <button class="favorite-btn ${isFavorite(product.id) ? 'active' : ''}" 
+                                    onclick="event.stopPropagation(); toggleFavorite(${product.id})">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            productsCount.textContent = `${filteredProducts.length} ürün listeleniyor`;
+        }
+
+        // Apply filters and sorting
+        function applyFilters() {
+            filteredProducts = allProducts.filter(product => {
+                // Category filter
+                if (currentFilters.category && product.category_slug !== currentFilters.category) {
+                    return false;
+                }
+
+                // Price filter
+                if (currentFilters.minPrice && product.price < currentFilters.minPrice) {
+                    return false;
+                }
+                if (currentFilters.maxPrice && product.price > currentFilters.maxPrice) {
+                    return false;
+                }
+
+                // Rating filter
+                if (currentFilters.rating.length > 0) {
+                    const minRating = Math.min(...currentFilters.rating);
+                    if ((product.average_rating || 0) < minRating) {
+                        return false;
+                    }
+                }
+
+                // Search filter
+                if (currentFilters.search) {
+                    const searchTerm = currentFilters.search.toLowerCase();
+                    return product.name.toLowerCase().includes(searchTerm) || 
+                           (product.description && product.description.toLowerCase().includes(searchTerm)) ||
+                           (product.brand && product.brand.toLowerCase().includes(searchTerm));
+                }
+
+                return true;
+            });
+
+            sortProducts();
+            renderProducts();
+        }
+
+        // Sort products
+        function sortProducts() {
+            switch (currentSort) {
+                case 'price-asc':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0));
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    break;
+                default: // featured
+                    filteredProducts.sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0));
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Sort change
+            sortSelect.addEventListener('change', (e) => {
+                currentSort = e.target.value;
+                applyFilters();
+            });
+
+            // Search
+            searchInput.addEventListener('input', debounce((e) => {
+                currentFilters.search = e.target.value;
+                applyFilters();
+            }, 300));
+
+            // Price filters
+            minPriceInput.addEventListener('input', debounce((e) => {
+                currentFilters.minPrice = e.target.value ? parseFloat(e.target.value) : null;
+                applyFilters();
+            }, 500));
+
+            maxPriceInput.addEventListener('input', debounce((e) => {
+                currentFilters.maxPrice = e.target.value ? parseFloat(e.target.value) : null;
+                applyFilters();
+            }, 500));
+
+            // Category filters
+            document.addEventListener('change', (e) => {
+                if (e.target.name === 'category') {
+                    const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
+                        .map(cb => cb.value);
+                    currentFilters.category = selectedCategories.length > 0 ? selectedCategories[0] : null;
+                    currentCategory.textContent = selectedCategories.length > 0 ? 
+                        getCategoryName(selectedCategories[0]) : 'Tüm Ürünler';
+                    applyFilters();
+                }
+
+                if (e.target.name === 'rating') {
+                    currentFilters.rating = Array.from(document.querySelectorAll('input[name="rating"]:checked'))
+                        .map(cb => parseInt(cb.value));
+                    applyFilters();
+                }
+            });
+
+            // View toggle
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    // View switching logic would go here
+                });
+            });
+        }
+
+        // Utility functions
+        function renderStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            
+            return '★'.repeat(fullStars) + 
+                   (halfStar ? '☆' : '') + 
+                   '☆'.repeat(emptyStars);
+        }
+
+        function formatPrice(price) {
+            return new Intl.NumberFormat('tr-TR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(price);
+        }
+
+        function getCategoryName(slug) {
+            const category = categories.find(c => c.slug === slug);
+            return category ? category.name : slug;
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Product actions
+        function goToProduct(slug) {
+            window.location.href = `product.html?slug=${slug}`;
+        }
+
+        async function addToCart(productId) {
+            const authToken = localStorage.getItem('token');
+            if (!authToken) {
+                alert('Sepete ürün eklemek için giriş yapmalısınız!');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                // API call to add to cart
+                const response = await fetch(`http://localhost:8000/cart/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ quantity: 1 })
+                });
+
+                if (response.ok) {
+                    // Sync localStorage
+                    const user = JSON.parse(localStorage.getItem('user') || '{}');
+                    const userId = user.id || 'guest';
+                    const cart = JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
+                    const existingItem = cart.find(item => item.id === productId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        const product = allProducts.find(p => p.id === productId);
+                        cart.push({
+                            id: productId,
+                            name: product.name,
+                            price: product.price,
+                            image: product.image_url,
+                            quantity: 1
+                        });
+                    }
+                    
+                    localStorage.setItem(`cart_${userId}`, JSON.stringify(cart));
+                    updateCartBadge();
+                    
+                    // Show feedback
+                    const button = event.target;
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check"></i> Eklendi';
+                    button.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.style.background = '';
+                    }, 1500);
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.message || 'Sepete ekleme hatası');
+                }
+            } catch (error) {
+                console.error('Add to cart error:', error);
+                alert('Sepete ekleme hatası: ' + error.message);
+            }
+        }
+
+        async function toggleFavorite(productId) {
+            const authToken = localStorage.getItem('token');
+            if (!authToken) {
+                alert('Favorilere eklemek için giriş yapmalısınız!');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                // API call to toggle favorite
+                const response = await fetch(`http://localhost:8000/favorites/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Update button state
+                    const button = event.target.closest('.favorite-btn');
+                    if (button) {
+                        if (data.action === 'added') {
+                            button.classList.add('active');
+                        } else {
+                            button.classList.remove('active');
+                        }
+                    }
+                    
+                    // Sync localStorage
+                    const user = JSON.parse(localStorage.getItem('user') || '{}');
+                    const userId = user.id || 'guest';
+                    const favorites = JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
+                    const index = favorites.indexOf(productId);
+                    
+                    if (data.action === 'added' && index === -1) {
+                        favorites.push(productId);
+                    } else if (data.action === 'removed' && index > -1) {
+                        favorites.splice(index, 1);
+                    }
+                    
+                    localStorage.setItem(`favorites_${userId}`, JSON.stringify(favorites));
+                } else {
+                    alert(data.message || 'Favori işlemi başarısız');
+                }
+            } catch (error) {
+                console.error('Favori işlemi hatası:', error);
+                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            }
+        }
+
+        function isFavorite(productId) {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userId = user.id || 'guest';
+            const favorites = JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
+            return favorites.includes(productId);
+        }
+
+        function updateCartBadge() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userId = user.id || 'guest';
+            const cart = JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cartBadge');
+            if (badge) {
+                badge.textContent = totalItems;
+            }
+        }
+
+        // Header actions
+        function performSearch() {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                currentFilters.search = searchTerm;
+                applyFilters();
+            }
+        }
+
+        function toggleFavorites() {
+            window.location.href = 'favorites.html';
+        }
+
+        function toggleCart() {
+            window.location.href = 'cart.html';
+        }
+
+        function toggleUser() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                window.location.href = 'profile.html';
+            } else {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Clear filters
+        function clearAllFilters() {
+            currentFilters = {
+                category: null,
+                minPrice: null,
+                maxPrice: null,
+                rating: [],
+                search: ''
+            };
+            
+            // Clear form inputs
+            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+            minPriceInput.value = '';
+            maxPriceInput.value = '';
+            searchInput.value = '';
+            
+            currentCategory.textContent = 'Tüm Ürünler';
+            applyFilters();
+        }
+
+        function showError(message) {
+            productsGrid.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">⚠️</div>
+                    <h3>Bir hata oluştu</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        // Search on Enter key
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorilerim - TechMart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .header-btn:hover {
+            color: #3b82f6;
+            background: #f3f4f6;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .favorites-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ef4444;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Filters */
+        .favorites-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .clear-all-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .clear-all-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Products Grid */
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .favorite-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .remove-favorite {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #ef4444;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .remove-favorite:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .product-image .placeholder {
+            font-size: 3rem;
+            color: #d1d5db;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-brand {
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+        }
+
+        .rating-text {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ef4444;
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            text-decoration: line-through;
+        }
+
+        .discount {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #2563eb;
+        }
+
+        .view-product {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-product:hover {
+            background: #e5e7eb;
+        }
+
+        .added-date {
+            color: #6b7280;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        /* Empty State */
+        .empty-favorites {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .empty-icon {
+            font-size: 5rem;
+            color: #d1d5db;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .empty-subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .empty-action {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .empty-action:hover {
+            background: #2563eb;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #10b981;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .favorites-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .favorites-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                justify-content: space-between;
+            }
+
+            .favorites-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shopping-bag"></i> TechMart
+            </a>
+            
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleCart()" title="Sepet">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="header-btn" onclick="toggleUser()" title="Hesabım">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-heart" style="color: #ef4444;"></i> Favorilerim
+            </h1>
+            <p class="page-subtitle">Beğendiğiniz ürünleri buradan takip edin</p>
+        </div>
+
+        <div class="favorites-stats" id="favoritesStats" style="display: none;">
+            <div class="stat-item">
+                <div class="stat-number" id="totalFavorites">0</div>
+                <div class="stat-label">Favori Ürün</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="totalValue">₺0</div>
+                <div class="stat-label">Toplam Değer</div>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage"></div>
+
+        <div class="favorites-filters" id="favoritesFilters" style="display: none;">
+            <div class="filter-group">
+                <label for="sortSelect">Sırala:</label>
+                <select class="filter-select" id="sortSelect">
+                    <option value="newest">En Son Eklenenler</option>
+                    <option value="oldest">En Eski Eklenenler</option>
+                    <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                    <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+                    <option value="rating">En Yüksek Puan</option>
+                </select>
+            </div>
+            
+            <button class="clear-all-btn" onclick="clearAllFavorites()">
+                <i class="fas fa-trash"></i> Tümünü Temizle
+            </button>
+        </div>
+
+        <div id="favoritesContent" class="loading">
+            <div class="spinner"></div>
+            Favoriler yükleniyor...
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:8000';
+
+        // State
+        let favorites = [];
+        let allProducts = [];
+        let favoriteProducts = [];
+        let currentSort = 'newest';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await checkAuth();
+            await loadFavorites();
+            await loadProducts();
+            await loadFavoriteProducts();
+            renderFavorites();
+            updateCartBadge();
+            setupEventListeners();
+        });
+
+        // Check authentication
+        async function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (!token || !user) {
+                alert('Bu sayfayı görüntülemek için giriş yapmalısınız.');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                const userData = JSON.parse(user);
+                // Update user display if exists
+                const userMenuText = document.getElementById('userMenuText');
+                if (userMenuText) {
+                    userMenuText.textContent = userData.firstName || userData.first_name || 'Kullanıcı';
+                }
+            } catch (error) {
+                console.error('User data error:', error);
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Load favorites from server and sync with localStorage
+        async function loadFavorites() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userId = user.id || 'guest';
+            
+            if (token) {
+                try {
+                    // Load from server
+                    const response = await fetch('http://localhost:8000/favorites', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        favorites = data.favorites.map(fav => fav.id);
+                        // Sync with localStorage
+                        localStorage.setItem(`favorites_${userId}`, JSON.stringify(favorites));
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Server favorites load error:', error);
+                }
+            }
+            
+            // Fallback to localStorage
+            favorites = JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
+        }
+
+        // Save favorites to localStorage (user-specific)
+        function saveFavorites() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userId = user.id || 'guest';
+            localStorage.setItem(`favorites_${userId}`, JSON.stringify(favorites));
+        }
+
+        // Load all products
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_BASE}/products`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.products) {
+                        allProducts = data.products;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+
+        // Load favorite products
+        async function loadFavoriteProducts() {
+            favoriteProducts = allProducts.filter(product => favorites.includes(product.id));
+            
+            // Add favorite date (mock data since we don't track this)
+            favoriteProducts.forEach((product, index) => {
+                const favoriteDate = new Date();
+                favoriteDate.setDate(favoriteDate.getDate() - Math.floor(Math.random() * 30));
+                product.favoriteDate = favoriteDate;
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            const sortSelect = document.getElementById('sortSelect');
+            sortSelect.addEventListener('change', (e) => {
+                currentSort = e.target.value;
+                renderFavorites();
+            });
+        }
+
+        // Render favorites
+        function renderFavorites() {
+            const favoritesContent = document.getElementById('favoritesContent');
+            const favoritesStats = document.getElementById('favoritesStats');
+            const favoritesFilters = document.getElementById('favoritesFilters');
+
+            if (favoriteProducts.length === 0) {
+                renderEmptyFavorites();
+                favoritesStats.style.display = 'none';
+                favoritesFilters.style.display = 'none';
+                return;
+            }
+
+            // Show stats and filters
+            favoritesStats.style.display = 'flex';
+            favoritesFilters.style.display = 'flex';
+
+            // Update stats
+            const totalValue = favoriteProducts.reduce((sum, product) => {
+                const price = parseFloat(product.price) || 0;
+                return sum + price;
+            }, 0);
+            document.getElementById('totalFavorites').textContent = favoriteProducts.length;
+            document.getElementById('totalValue').textContent = `₺${formatPrice(totalValue)}`;
+
+            // Sort products
+            sortFavorites();
+
+            // Render grid
+            favoritesContent.innerHTML = `
+                <div class="favorites-grid">
+                    ${favoriteProducts.map(product => renderFavoriteCard(product)).join('')}
+                </div>
+            `;
+        }
+
+        // Render single favorite card
+        function renderFavoriteCard(product) {
+            const discount = product.original_price && product.original_price > product.price ?
+                Math.round((1 - product.price / product.original_price) * 100) : 0;
+
+            return `
+                <div class="favorite-card" onclick="goToProduct('${product.slug}')">
+                    <button class="remove-favorite" onclick="event.stopPropagation(); removeFromFavorites(${product.id})" title="Favorilerden Kaldır">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div class="product-image">
+                        ${product.image_url ? 
+                            `<img src="${product.image_url}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x400/f1f5f9/64748b?text=Ürün+Görseli'">` :
+                            `<div class="placeholder"><i class="fas fa-box" style="font-size: 3rem; color: #9ca3af;"></i></div>`
+                        }
+                    </div>
+                    
+                    <div class="product-info">
+                        <div class="product-brand">${product.brand || 'TechMart'}</div>
+                        <h3 class="product-title">${product.name}</h3>
+                        
+                        <div class="product-rating">
+                            <div class="stars">${renderStars(product.average_rating || 0)}</div>
+                            <span class="rating-text">(${product.review_count || 0})</span>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="current-price">₺${formatPrice(product.price)}</span>
+                            ${product.original_price && product.original_price > product.price ? `
+                                <span class="original-price">₺${formatPrice(product.original_price)}</span>
+                                <span class="discount">%${discount} İNDİRİM</span>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="product-actions">
+                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">
+                                <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                            </button>
+                            <button class="view-product" onclick="event.stopPropagation(); goToProduct('${product.slug}')">
+                                <i class="fas fa-eye"></i> Detay
+                            </button>
+                        </div>
+                        
+                        <div class="added-date">
+                            ${formatDate(product.favoriteDate)} tarihinde eklendi
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render empty favorites
+        function renderEmptyFavorites() {
+            document.getElementById('favoritesContent').innerHTML = `
+                <div class="empty-favorites">
+                    <div class="empty-icon">
+                        <i class="fas fa-heart-broken"></i>
+                    </div>
+                    <h2 class="empty-title">Henüz Favori Ürününüz Yok</h2>
+                    <p class="empty-subtitle">
+                        Beğendiğiniz ürünleri favorilere ekleyerek kolayca takip edebilirsiniz.<br>
+                        Ürün sayfalarında ❤️ butonuna tıklayarak favorilere ekleyebilirsiniz.
+                    </p>
+                    <button class="empty-action" onclick="goToProducts()">
+                        <i class="fas fa-shopping-bag"></i> Ürünleri Keşfet
+                    </button>
+                </div>
+            `;
+        }
+
+        // Sort favorites
+        function sortFavorites() {
+            switch (currentSort) {
+                case 'newest':
+                    favoriteProducts.sort((a, b) => new Date(b.favoriteDate) - new Date(a.favoriteDate));
+                    break;
+                case 'oldest':
+                    favoriteProducts.sort((a, b) => new Date(a.favoriteDate) - new Date(b.favoriteDate));
+                    break;
+                case 'price-asc':
+                    favoriteProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    favoriteProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    favoriteProducts.sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0));
+                    break;
+            }
+        }
+
+        // Remove from favorites
+        async function removeFromFavorites(productId) {
+            if (confirm('Bu ürünü favorilerinizden kaldırmak istediğinizden emin misiniz?')) {
+                try {
+                    const token = localStorage.getItem('token');
+                    if (!token) {
+                        alert('Oturum süresi dolmuş. Lütfen tekrar giriş yapın.');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    // API call to remove favorite
+                    const response = await fetch(`http://localhost:8000/favorites/${productId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                        // Update local arrays
+                        favorites = favorites.filter(id => id !== productId);
+                        favoriteProducts = favoriteProducts.filter(product => product.id !== productId);
+                        saveFavorites();
+                        renderFavorites();
+                        showSuccess('Ürün favorilerinizden kaldırıldı');
+                    } else {
+                        showError(data.message || 'Favori kaldırma işlemi başarısız');
+                    }
+                } catch (error) {
+                    console.error('Remove favorite error:', error);
+                    showError('Bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            }
+        }
+
+        // Clear all favorites
+        function clearAllFavorites() {
+            if (confirm('Tüm favori ürünlerinizi kaldırmak istediğinizden emin misiniz?')) {
+                favorites = [];
+                favoriteProducts = [];
+                saveFavorites();
+                renderFavorites();
+                showSuccess('Tüm favoriler temizlendi');
+            }
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image_url,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartBadge();
+            showSuccess('Ürün sepete eklendi');
+        }
+
+        // Navigation functions
+        function goToProduct(slug) {
+            window.location.href = `product.html?slug=${slug}`;
+        }
+
+        function goToProducts() {
+            window.location.href = 'products.html';
+        }
+
+        function toggleCart() {
+            window.location.href = 'cart.html';
+        }
+
+        function toggleUser() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                window.location.href = 'profile.html';
+            } else {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Utility functions
+        function renderStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            
+            return '★'.repeat(fullStars) + 
+                   (halfStar ? '☆' : '') + 
+                   '☆'.repeat(emptyStars);
+        }
+
+        function formatPrice(price) {
+            return new Intl.NumberFormat('tr-TR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(price);
+        }
+
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('tr-TR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartBadge').textContent = totalItems;
+        }
+
+        function showSuccess(message) {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Logout function
+        function logout() {
+            // Sadece oturum verilerini temizle, kullanıcı verilerini koru
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            showSuccess('Başarıyla çıkış yaptınız!');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

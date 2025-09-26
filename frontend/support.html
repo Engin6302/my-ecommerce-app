@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canlı Destek - TechMart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #2563eb;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .contact-card h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .contact-btn:hover {
+            background: #2563eb;
+        }
+
+        .whatsapp {
+            background: #25d366;
+        }
+
+        .whatsapp:hover {
+            background: #128c7e;
+        }
+
+        .support-hours {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .hour-item {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .chat-simulator {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+        }
+
+        .chat-header {
+            background: #3b82f6;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+            margin: -2rem -2rem 1rem -2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .chat-message {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .agent-message {
+            background: #f3f4f6;
+            margin-right: 20%;
+        }
+
+        .user-message {
+            background: #3b82f6;
+            color: white;
+            margin-left: 20%;
+        }
+
+        .typing-indicator {
+            color: #6b7280;
+            font-style: italic;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .hours-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shopping-cart"></i> TechMart
+            </a>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3>Telefon Desteği</h3>
+                <p>Uzman ekibimizle doğrudan konuşun. Hızlı çözüm için tercih edilen yöntem.</p>
+                <a href="tel:08501234567" class="contact-btn">
+                    <i class="fas fa-phone"></i> 0850 123 45 67
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <h3>WhatsApp Destek</h3>
+                <p>WhatsApp üzerinden mesaj gönderin, hızlı yanıt alın.</p>
+                <a href="https://wa.me/908501234567" class="contact-btn whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp'tan Yaz
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>E-posta Desteği</h3>
+                <p>Detaylı sorularınız için e-posta gönderin, 24 saat içinde yanıt alın.</p>
+                <a href="mailto:info@techmart.com" class="contact-btn">
+                    <i class="fas fa-envelope"></i> E-posta Gönder
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Canlı Chat</h3>
+                <p>Web sitemizde bulunan canlı chat özelliği ile anında destek alın.</p>
+                <button class="contact-btn" onclick="startChat()">
+                    <i class="fas fa-comments"></i> Chat Başlat
+                </button>
+            </div>
+
+            <div class="support-hours">
+                <h2>Destek Saatleri</h2>
+                <p>7 gün 24 saat hizmetinizdeyiz!</p>
+                <div class="hours-grid">
+                    <div class="hour-item">
+                        <strong>Telefon Desteği</strong><br>
+                        Pazartesi - Pazar<br>
+                        24 Saat
+                    </div>
+                    <div class="hour-item">
+                        <strong>Canlı Chat</strong><br>
+                        Pazartesi - Pazar<br>
+                        24 Saat
+                    </div>
+                    <div class="hour-item">
+                        <strong>E-posta Desteği</strong><br>
+                        Yanıt Süresi<br>
+                        24 Saat İçinde
+                    </div>
+                    <div class="hour-item">
+                        <strong>WhatsApp</strong><br>
+                        Pazartesi - Pazar<br>
+                        09:00 - 22:00
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-simulator" id="chatBox" style="display: none;">
+                <div class="chat-header">
+                    <i class="fas fa-comments"></i> TechMart Canlı Destek
+                </div>
+                <div class="chat-message agent-message">
+                    Merhaba! TechMart müşteri hizmetlerine hoş geldiniz. Size nasıl yardımcı olabilirim? 😊
+                </div>
+                <div class="chat-message user-message">
+                    Merhaba, iPhone 15 Pro Max hakkında bilgi almak istiyorum.
+                </div>
+                <div class="chat-message agent-message">
+                    Tabii ki! iPhone 15 Pro Max modelimiz şu anda stoklarımızda mevcut. 256GB model 49.999 TL, 512GB model 54.999 TL'dir. Hangi depolama kapasitesi ile ilgileniyorsunuz?
+                </div>
+                <div class="typing-indicator">
+                    <i class="fas fa-ellipsis-h"></i> Müşteri temsilcisi yazıyor...
+                </div>
+                <p style="text-align: center; margin-top: 1rem; color: #6b7280;">
+                    Bu örnek bir chat simülasyonudur. Gerçek destek için yukarıdaki iletişim yöntemlerini kullanın.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function startChat() {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.style.display = 'block';
+            chatBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

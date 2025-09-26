@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏪 TechMart Admin - Sipariş Yönetimi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .orders-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .refresh-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: auto;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .orders-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .orders-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-complete {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-cancel {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-complete:hover {
+            background: #218838;
+        }
+
+        .btn-cancel:hover {
+            background: #c82333;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .success-message, .error-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .orders-table {
+                font-size: 0.8rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">🏪 TechMart Admin Paneli</div>
+                <div>Sipariş Yönetim Sistemi</div>
+            </div>
+        </header>
+
+        <div class="stats" id="statsSection">
+            <div class="stat-card">
+                <h3>📦 Toplam Sipariş</h3>
+                <div class="number" id="totalOrders">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>⏳ Bekleyen Siparişler</h3>
+                <div class="number" id="pendingOrders">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>💰 Toplam Gelir</h3>
+                <div class="number" id="totalRevenue">₺0</div>
+            </div>
+            <div class="stat-card">
+                <h3>✅ Tamamlanan</h3>
+                <div class="number" id="completedOrders">-</div>
+            </div>
+        </div>
+
+        <div class="orders-section">
+            <div class="section-title">
+                📋 Sipariş Listesi
+                <button class="refresh-btn" onclick="loadOrders()">🔄 Yenile</button>
+            </div>
+
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Siparişler yükleniyor...</p>
+            </div>
+
+            <div id="messageArea"></div>
+
+            <div id="ordersContainer">
+                <table class="orders-table" id="ordersTable" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Sipariş No</th>
+                            <th>Müşteri</th>
+                            <th>E-posta</th>
+                            <th>Telefon</th>
+                            <th>Tutar</th>
+                            <th>Durum</th>
+                            <th>Tarih</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                    </tbody>
+                </table>
+
+                <div class="no-orders" id="noOrders" style="display: none;">
+                    <h3>📦 Henüz sipariş bulunmuyor</h3>
+                    <p>İlk siparişler geldiğinde burada görünecek.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let orders = [];
+
+        // Sayfa yüklendiğinde çalışacak
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrders();
+            // Her 30 saniyede bir otomatik yenile
+            setInterval(loadOrders, 30000);
+        });
+
+        // Siparişleri API'den yükle
+        async function loadOrders() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('ordersTable').style.display = 'none';
+            document.getElementById('noOrders').style.display = 'none';
+
+            try {
+                const response = await fetch('/api/orders');
+                const data = await response.json();
+                
+                if (data.success) {
+                    orders = data.orders;
+                    displayOrders();
+                    updateStats();
+                } else {
+                    showError('Siparişler yüklenemedi: ' + data.error);
+                }
+            } catch (error) {
+                showError('Bağlantı hatası: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Siparişleri tabloda göster
+        function displayOrders() {
+            const tbody = document.getElementById('ordersTableBody');
+            
+            if (orders.length === 0) {
+                document.getElementById('noOrders').style.display = 'block';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            document.getElementById('ordersTable').style.display = 'table';
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                const orderDate = new Date(order.created_at).toLocaleString('tr-TR');
+                
+                row.innerHTML = `
+                    <td><strong>#${order.id}</strong></td>
+                    <td>${order.customer_name}</td>
+                    <td>${order.customer_email}</td>
+                    <td>${order.customer_phone || '-'}</td>
+                    <td><strong>₺${parseFloat(order.total_amount).toLocaleString('tr-TR', {minimumFractionDigits: 2})}</strong></td>
+                    <td><span class="status-badge status-${order.status}">${getStatusText(order.status)}</span></td>
+                    <td>${orderDate}</td>
+                    <td>
+                        <div class="order-actions">
+                            ${order.status === 'pending' ? `
+                                <button class="action-btn btn-complete" onclick="updateOrderStatus(${order.id}, 'completed')">
+                                    ✅ Tamamla
+                                </button>
+                                <button class="action-btn btn-cancel" onclick="updateOrderStatus(${order.id}, 'cancelled')">
+                                    ❌ İptal
+                                </button>
+                            ` : `
+                                <span style="color: #666; font-size: 0.8rem;">
+                                    ${order.status === 'completed' ? '✅ Tamamlandı' : '❌ İptal Edildi'}
+                                </span>
+                            `}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Durum metnini çevir
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'Bekliyor',
+                'completed': 'Tamamlandı',
+                'cancelled': 'İptal Edildi'
+            };
+            return statusMap[status] || status;
+        }
+
+        // İstatistikleri güncelle
+        function updateStats() {
+            const totalOrders = orders.length;
+            const pendingOrders = orders.filter(o => o.status === 'pending').length;
+            const completedOrders = orders.filter(o => o.status === 'completed').length;
+            const totalRevenue = orders
+                .filter(o => o.status === 'completed')
+                .reduce((sum, order) => sum + parseFloat(order.total_amount), 0);
+
+            document.getElementById('totalOrders').textContent = totalOrders;
+            document.getElementById('pendingOrders').textContent = pendingOrders;
+            document.getElementById('completedOrders').textContent = completedOrders;
+            document.getElementById('totalRevenue').textContent = 
+                `₺${totalRevenue.toLocaleString('tr-TR', {minimumFractionDigits: 2})}`;
+        }
+
+        // Sipariş durumunu güncelle
+        async function updateOrderStatus(orderId, newStatus) {
+            if (!confirm(`Sipariş #${orderId} durumunu "${getStatusText(newStatus)}" olarak güncellemek istediğinizden emin misiniz?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess(`Sipariş #${orderId} durumu güncellendi: ${getStatusText(newStatus)}`);
+                    loadOrders(); // Listeyi yenile
+                } else {
+                    showError(data.error || 'Durum güncellenemedi');
+                }
+            } catch (error) {
+                showError('Güncelleme hatası: ' + error.message);
+            }
+        }
+
+        // Başarı mesajı göster
+        function showSuccess(message) {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.innerHTML = `<div class="success-message">${message}</div>`;
+            setTimeout(() => {
+                messageArea.innerHTML = '';
+            }, 5000);
+        }
+
+        // Hata mesajı göster
+        function showError(message) {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.innerHTML = `<div class="error-message">${message}</div>`;
+        }
+    </script>
+</body>
+</html>

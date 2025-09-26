@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol - TechMart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 700px;
+        }
+
+        .register-side {
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .brand-side {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .brand-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .brand-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .register-header {
+            margin-bottom: 30px;
+        }
+
+        .register-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .register-subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #10b981;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .password-toggle:hover {
+            color: #10b981;
+        }
+
+        .phone-container {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .country-code {
+            flex: 0 0 120px;
+            min-width: 120px;
+            font-size: 0.9rem;
+            padding: 12px 8px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .country-code:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .phone-number {
+            flex: 1;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .strength-weak { background: #ef4444; width: 25%; }
+        .strength-fair { background: #f59e0b; width: 50%; }
+        .strength-good { background: #10b981; width: 75%; }
+        .strength-strong { background: #059669; width: 100%; }
+
+        .strength-text {
+            font-size: 0.8rem;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .terms-checkbox {
+            margin-top: 4px;
+        }
+
+        .terms-text {
+            font-size: 0.9rem;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .terms-text a {
+            color: #10b981;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        .register-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .register-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-link {
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .login-link a {
+            color: #10b981;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #dc2626;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #10b981;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .input-error {
+            border-color: #ef4444 !important;
+            background: #fef2f2 !important;
+        }
+
+        .field-error {
+            color: #dc2626;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+            }
+
+            .brand-side {
+                display: none;
+            }
+
+            .register-side {
+                padding: 30px 25px;
+            }
+
+            .register-title {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="register-side">
+            <div class="register-header">
+                <h1 class="register-title">Kayıt Ol</h1>
+                <p class="register-subtitle">Hemen hesap oluşturun ve özel fırsatlardan yararlanın</p>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">
+                            <i class="fas fa-user"></i> Ad
+                        </label>
+                        <input type="text" id="firstName" class="form-input" placeholder="Adınız" required>
+                        <div class="field-error" id="firstNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">
+                            <i class="fas fa-user"></i> Soyad
+                        </label>
+                        <input type="text" id="lastName" class="form-input" placeholder="Soyadınız" required>
+                        <div class="field-error" id="lastNameError"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope"></i> E-posta Adresi
+                    </label>
+                    <input type="email" id="email" class="form-input" placeholder="ornek@email.com" required>
+                    <div class="field-error" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">
+                        <i class="fas fa-phone"></i> Telefon Numarası
+                    </label>
+                    <div class="phone-container">
+                        <select id="countryCode" class="country-code">
+                            <option value="+90">🇹🇷 +90</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+33">🇫🇷 +33</option>
+                            <option value="+39">🇮🇹 +39</option>
+                            <option value="+34">🇪🇸 +34</option>
+                            <option value="+31">🇳🇱 +31</option>
+                            <option value="+41">🇨🇭 +41</option>
+                            <option value="+43">🇦🇹 +43</option>
+                            <option value="+32">🇧🇪 +32</option>
+                            <option value="+46">🇸🇪 +46</option>
+                            <option value="+47">🇳🇴 +47</option>
+                            <option value="+45">🇩🇰 +45</option>
+                            <option value="+358">🇫🇮 +358</option>
+                            <option value="+7">🇷🇺 +7</option>
+                            <option value="+86">🇨🇳 +86</option>
+                            <option value="+81">🇯🇵 +81</option>
+                            <option value="+82">🇰🇷 +82</option>
+                            <option value="+91">🇮🇳 +91</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+966">🇸🇦 +966</option>
+                        </select>
+                        <input type="tel" id="phone" class="form-input phone-number" placeholder="5XX XXX XX XX" required>
+                    </div>
+                    <div class="field-error" id="phoneError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock"></i> Şifre
+                    </label>
+                    <div class="password-container">
+                        <input type="password" id="password" class="form-input" placeholder="Güçlü bir şifre oluşturun" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password', 'eyeIcon1')">
+                            <i class="fas fa-eye" id="eyeIcon1"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText"></div>
+                    <div class="field-error" id="passwordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">
+                        <i class="fas fa-lock"></i> Şifre Tekrar
+                    </label>
+                    <div class="password-container">
+                        <input type="password" id="confirmPassword" class="form-input" placeholder="Şifrenizi tekrar girin" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword', 'eyeIcon2')">
+                            <i class="fas fa-eye" id="eyeIcon2"></i>
+                        </button>
+                    </div>
+                    <div class="field-error" id="confirmPasswordError"></div>
+                </div>
+
+                <div class="terms-group">
+                    <input type="checkbox" id="terms" class="terms-checkbox" required>
+                    <label for="terms" class="terms-text">
+                        <a href="#" onclick="showTerms()">Kullanım Şartları</a>'nı ve 
+                        <a href="#" onclick="showPrivacy()">Gizlilik Politikası</a>'nı okudum, kabul ediyorum.
+                    </label>
+                </div>
+
+                <button type="submit" class="register-btn" id="registerBtn">
+                    <span id="btnText">Hesap Oluştur</span>
+                </button>
+            </form>
+
+            <div class="login-link">
+                <p>Zaten hesabınız var mı? <a href="login.html">Giriş Yap</a></p>
+            </div>
+        </div>
+
+        <div class="brand-side">
+            <div class="logo">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <h2 class="brand-title">TechMart Ailesine Katılın</h2>
+            <p class="brand-subtitle">
+                Binlerce teknoloji ürününe erişin, özel indirimlerden yararlanın ve 
+                kişiselleştirilmiş alışveriş deneyimi yaşayın. Ücretsiz üyelik, hızlı teslimat!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // API Base URL
+        const API_BASE = 'http://localhost:8000';
+
+        // DOM Elements
+        const registerForm = document.getElementById('registerForm');
+        const registerBtn = document.getElementById('registerBtn');
+        const btnText = document.getElementById('btnText');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        // Form inputs
+        const inputs = {
+            firstName: document.getElementById('firstName'),
+            lastName: document.getElementById('lastName'),
+            email: document.getElementById('email'),
+            phone: document.getElementById('phone'),
+            countryCode: document.getElementById('countryCode'),
+            password: document.getElementById('password'),
+            confirmPassword: document.getElementById('confirmPassword'),
+            terms: document.getElementById('terms')
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePhonePlaceholder(inputs.countryCode.value);
+        });
+
+        // Password toggle functionality
+        function togglePassword(fieldId, iconId) {
+            const passwordField = document.getElementById(fieldId);
+            const eyeIcon = document.getElementById(iconId);
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.className = 'fas fa-eye';
+            }
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            
+            let score = 0;
+            let feedback = '';
+
+            if (password.length >= 8) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^A-Za-z0-9]/.test(password)) score++;
+
+            strengthBar.className = 'strength-bar';
+            
+            switch (score) {
+                case 0:
+                case 1:
+                    strengthBar.classList.add('strength-weak');
+                    strengthText.textContent = 'Zayıf şifre';
+                    strengthText.style.color = '#ef4444';
+                    feedback = 'En az 8 karakter, büyük/küçük harf, rakam ve özel karakter kullanın';
+                    break;
+                case 2:
+                case 3:
+                    strengthBar.classList.add('strength-fair');
+                    strengthText.textContent = 'Orta güçlükte şifre';
+                    strengthText.style.color = '#f59e0b';
+                    feedback = 'Daha güçlü bir şifre için özel karakter ekleyin';
+                    break;
+                case 4:
+                    strengthBar.classList.add('strength-good');
+                    strengthText.textContent = 'İyi şifre';
+                    strengthText.style.color = '#10b981';
+                    feedback = '';
+                    break;
+                case 5:
+                    strengthBar.classList.add('strength-strong');
+                    strengthText.textContent = 'Çok güçlü şifre';
+                    strengthText.style.color = '#059669';
+                    feedback = '';
+                    break;
+                default:
+                    strengthText.textContent = '';
+            }
+
+            return { score, feedback };
+        }
+
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        // Hide messages
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        // Show field error
+        function showFieldError(field, message) {
+            const input = inputs[field];
+            const errorDiv = document.getElementById(field + 'Error');
+            
+            input.classList.add('input-error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        // Clear field error
+        function clearFieldError(field) {
+            const input = inputs[field];
+            const errorDiv = document.getElementById(field + 'Error');
+            
+            input.classList.remove('input-error');
+            errorDiv.style.display = 'none';
+        }
+
+        // Clear all field errors
+        function clearAllFieldErrors() {
+            Object.keys(inputs).forEach(field => {
+                if (field !== 'countryCode' && field !== 'terms') {
+                    clearFieldError(field);
+                }
+            });
+        }
+
+        // Set loading state
+        function setLoading(loading) {
+            if (loading) {
+                registerBtn.disabled = true;
+                btnText.innerHTML = '<span class="loading"></span>Hesap oluşturuluyor...';
+            } else {
+                registerBtn.disabled = false;
+                btnText.textContent = 'Hesap Oluştur';
+            }
+        }
+
+        // Validation functions
+        function validateForm() {
+            clearAllFieldErrors();
+            let isValid = true;
+
+            // First name validation
+            if (!inputs.firstName.value.trim()) {
+                showFieldError('firstName', 'Ad alanı zorunludur');
+                isValid = false;
+            } else if (inputs.firstName.value.trim().length < 2) {
+                showFieldError('firstName', 'Ad en az 2 karakter olmalıdır');
+                isValid = false;
+            }
+
+            // Last name validation
+            if (!inputs.lastName.value.trim()) {
+                showFieldError('lastName', 'Soyad alanı zorunludur');
+                isValid = false;
+            } else if (inputs.lastName.value.trim().length < 2) {
+                showFieldError('lastName', 'Soyad en az 2 karakter olmalıdır');
+                isValid = false;
+            }
+
+            // Email validation
+            if (!inputs.email.value.trim()) {
+                showFieldError('email', 'E-posta adresi zorunludur');
+                isValid = false;
+            } else if (!isValidEmail(inputs.email.value.trim())) {
+                showFieldError('email', 'Geçerli bir e-posta adresi girin');
+                isValid = false;
+            }
+
+            // Phone validation
+            if (!inputs.phone.value.trim()) {
+                showFieldError('phone', 'Telefon numarası zorunludur');
+                isValid = false;
+            } else if (!isValidPhone(inputs.phone.value.trim(), inputs.countryCode.value)) {
+                showFieldError('phone', 'Geçerli bir telefon numarası girin');
+                isValid = false;
+            }
+
+            // Password validation
+            if (!inputs.password.value) {
+                showFieldError('password', 'Şifre zorunludur');
+                isValid = false;
+            } else {
+                const passwordCheck = checkPasswordStrength(inputs.password.value);
+                if (passwordCheck.score < 3) {
+                    showFieldError('password', passwordCheck.feedback);
+                    isValid = false;
+                }
+            }
+
+            // Confirm password validation
+            if (!inputs.confirmPassword.value) {
+                showFieldError('confirmPassword', 'Şifre tekrarı zorunludur');
+                isValid = false;
+            } else if (inputs.password.value !== inputs.confirmPassword.value) {
+                showFieldError('confirmPassword', 'Şifreler eşleşmiyor');
+                isValid = false;
+            }
+
+            // Terms validation
+            if (!inputs.terms.checked) {
+                showError('Kullanım şartlarını kabul etmelisiniz');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Email validation
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Phone validation based on country code
+        function isValidPhone(phone, countryCode) {
+            const cleanPhone = phone.replace(/\s/g, '');
+            
+            switch (countryCode) {
+                case '+90': // Turkey
+                    return /^5\d{9}$/.test(cleanPhone);
+                case '+1': // US/Canada
+                    return /^\d{10}$/.test(cleanPhone);
+                case '+44': // UK
+                    return /^7\d{9}$/.test(cleanPhone);
+                case '+49': // Germany
+                    return /^1\d{10,11}$/.test(cleanPhone);
+                case '+33': // France
+                    return /^[67]\d{8}$/.test(cleanPhone);
+                default:
+                    return cleanPhone.length >= 7 && cleanPhone.length <= 15;
+            }
+        }
+
+        // Format phone number as user types
+        function formatPhoneNumber(value, countryCode) {
+            const cleaned = value.replace(/\D/g, '');
+            
+            switch (countryCode) {
+                case '+90': // Turkey
+                    if (cleaned.length <= 3) return cleaned;
+                    if (cleaned.length <= 6) return cleaned.slice(0, 3) + ' ' + cleaned.slice(3);
+                    if (cleaned.length <= 8) return cleaned.slice(0, 3) + ' ' + cleaned.slice(3, 6) + ' ' + cleaned.slice(6);
+                    return cleaned.slice(0, 3) + ' ' + cleaned.slice(3, 6) + ' ' + cleaned.slice(6, 8) + ' ' + cleaned.slice(8, 10);
+                    
+                case '+1': // US/Canada
+                    if (cleaned.length <= 3) return cleaned;
+                    if (cleaned.length <= 6) return '(' + cleaned.slice(0, 3) + ') ' + cleaned.slice(3);
+                    return '(' + cleaned.slice(0, 3) + ') ' + cleaned.slice(3, 6) + '-' + cleaned.slice(6, 10);
+                    
+                case '+44': // UK
+                case '+49': // Germany
+                case '+33': // France
+                    if (cleaned.length <= 2) return cleaned;
+                    if (cleaned.length <= 4) return cleaned.slice(0, 2) + ' ' + cleaned.slice(2);
+                    if (cleaned.length <= 6) return cleaned.slice(0, 2) + ' ' + cleaned.slice(2, 4) + ' ' + cleaned.slice(4);
+                    return cleaned.slice(0, 2) + ' ' + cleaned.slice(2, 4) + ' ' + cleaned.slice(4, 6) + ' ' + cleaned.slice(6, 10);
+                    
+                default:
+                    // Generic formatting for other countries
+                    if (cleaned.length <= 3) return cleaned;
+                    if (cleaned.length <= 6) return cleaned.slice(0, 3) + ' ' + cleaned.slice(3);
+                    return cleaned.slice(0, 3) + ' ' + cleaned.slice(3, 6) + ' ' + cleaned.slice(6);
+            }
+        }
+
+        // Update placeholder based on country code
+        function updatePhonePlaceholder(countryCode) {
+            const phoneInput = inputs.phone;
+            switch (countryCode) {
+                case '+90':
+                    phoneInput.placeholder = '5XX XXX XX XX';
+                    break;
+                case '+1':
+                    phoneInput.placeholder = '(555) 123-4567';
+                    break;
+                case '+44':
+                    phoneInput.placeholder = '20 1234 5678';
+                    break;
+                case '+49':
+                    phoneInput.placeholder = '30 12345678';
+                    break;
+                case '+33':
+                    phoneInput.placeholder = '01 23 45 67 89';
+                    break;
+                default:
+                    phoneInput.placeholder = 'Phone number';
+            }
+        }
+
+        // Event listeners
+        inputs.password.addEventListener('input', (e) => {
+            checkPasswordStrength(e.target.value);
+        });
+
+        inputs.phone.addEventListener('input', (e) => {
+            const formatted = formatPhoneNumber(e.target.value, inputs.countryCode.value);
+            e.target.value = formatted;
+        });
+
+        inputs.countryCode.addEventListener('change', (e) => {
+            updatePhonePlaceholder(e.target.value);
+            inputs.phone.value = formatPhoneNumber(inputs.phone.value, e.target.value);
+        });
+
+        // Handle form submission
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+
+            if (!validateForm()) {
+                return;
+            }
+
+            setLoading(true);
+
+            const fullPhone = inputs.countryCode.value + inputs.phone.value.replace(/\s/g, '');
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        firstName: inputs.firstName.value.trim(),
+                        lastName: inputs.lastName.value.trim(),
+                        email: inputs.email.value.trim(),
+                        phone: fullPhone,
+                        password: inputs.password.value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showSuccess('Hesabınız başarıyla oluşturuldu! E-posta adresinizi doğruladıktan sonra giriş yapabilirsiniz.');
+                    
+                    // Store token if provided
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                    }
+                    
+                    // Reset form
+                    registerForm.reset();
+                    
+                    // Redirect to login after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 3000);
+                } else {
+                    if (data.field) {
+                        showFieldError(data.field, data.error || data.message);
+                    } else {
+                        showError(data.error || data.message || 'Kayıt olurken bir hata oluştu.');
+                    }
+                }
+            } catch (error) {
+                console.error('Register error:', error);
+                showError('Bağlantı hatası. Lütfen tekrar deneyin.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Modal functions (placeholder)
+        function showTerms() {
+            alert('Kullanım Şartları modalı burada açılacak');
+        }
+
+        function showPrivacy() {
+            alert('Gizlilik Politikası modalı burada açılacak');
+        }
+
+        // Check if user is already logged in
+        if (localStorage.getItem('token')) {
+            window.location.href = 'new-index.html';
+        }
+
+        // Auto-focus first name field
+        inputs.firstName.focus();
+    </script>
+</body>
+</html>
